@@ -50,6 +50,10 @@
             android:label="Preferencias"
             android:name=".activities.Preferencias"
             android:exported="true" />
+        <activity
+            android:label="Preferencias"
+            android:name=".activities.SettingActivity"
+            android:exported="true" />
 
     </application>
 

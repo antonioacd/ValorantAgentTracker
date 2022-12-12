@@ -9,25 +9,27 @@
         android:id="@+id/btnCuenta"
         android:layout_width="0dp"
         android:layout_height="70dp"
+        android:background="@drawable/degradado"
         android:text="Cuenta"
-        android:background="@drawable/boton_ajustes"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005" />
+        app:layout_constraintVertical_bias="0.039" />
 
     <Button
         android:id="@+id/btnPreferencias"
         android:layout_width="0dp"
         android:layout_height="70dp"
+        android:background="@drawable/degradado"
         android:text="Preferencias"
-        android:background="@drawable/boton_ajustes"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCuenta"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.026" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,9 +41,6 @@ public class Preferencias extends AppCompatActivity {
         });
     }
 
-
-
-
     public void setDayNigth(int modo){
 
         if (modo == 0){

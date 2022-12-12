@@ -3,17 +3,17 @@ package com.example.proyectovalorant.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.service.controls.Control;
 import android.util.Log;
 import androidx.appcompat.view.ActionMode;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
@@ -36,8 +36,6 @@ import com.example.proyectovalorant.R;
 import com.example.proyectovalorant.adapter.RecyclerAdapter;
 import com.example.proyectovalorant.controller.HttpConnectValorant;
 import com.example.proyectovalorant.model.Objeto;
-
-import kotlin.time.ExperimentalTime;
 
 /**
  * Actividad peticiones REST: En esta actividad se verán las bases de las peticiones REST a través
@@ -120,6 +118,46 @@ public class CargarApiActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadPreferences();
+
+    }
+
+    public void loadPreferences(){
+
+        //Todo 4. Una vez creado todo, solo debemos de preocuparnos de acceder a la información,
+        // ya  que Android se encarga del almacenamiento de los datos que introduce el usuario en
+        // la ventana de preferencias.
+
+        //Todo 4.1 Utilizamos PreferenceManager para obtener las preferencias compartidas de nuestra
+        // aplicación. TENEIS QUE TENER EN CUENTA QUE ESTE ES EL MISMO PARA TODA LA APP (PATRÓN SINGLETON)
+
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CargarApiActivity.this);
+        // Todo 4.2 Una vez tenemos acceso a las preferencias compartidas, solo debemos acceder mediante la clave para obtener su valor
+        boolean activo = sharedPreferences.getBoolean("tema", false);
+        Log.d("H", "Devuelve: " + activo);
+
+        setDayNigth(activo);
+
+    }
+
+    public void setDayNigth(boolean modo){
+
+        if (modo){
+
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        }else{
+
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
     //Todo 1. Se sobreescribe el metodo onCreateOptionsMenu para indicar que nuestra app tendra
