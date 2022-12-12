@@ -43,7 +43,7 @@
             android:name=".controller.ControladorUsuario"
             android:exported="true" />
         <activity
-            android:label="Mis datos"
+            android:label="Ajustes"
             android:name=".controller.Ajustes"
             android:exported="true" />
         <activity
