@@ -21,11 +21,13 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        //Ponemos el fragment por encima de nuestro layout
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.setting_container, new SettingsFragment())
                 .commit();
 
+        //Activamos la opcion de ir hacia atras
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -36,34 +38,25 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        //Cargamos las preferencias
         loadPreferences();
-
     }
 
     public void loadPreferences(){
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingActivity.this);
         boolean activo = sharedPreferences.getBoolean("tema", false);
-        Log.d("H", "Devuelve: " + activo);
-
         setDayNigth(activo);
-
     }
 
     public void setDayNigth(boolean modo){
-
         if (modo){
-
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
         }else{
-
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         }
     }
 
+    //Este metodo implementa el boton de regresar a la pagina anterior
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){

@@ -2,10 +2,14 @@ package com.example.proyectovalorant.model;
 
 public class Usuario {
 
+    //Creamos atributos de la clase Usuario
+
     String nombre;
     String telefono;
     String usuario;
     String contraseña;
+
+    //Implementamos su constructor
 
     public Usuario(String nombre, String telefono, String usuario, String contraseña) {
         this.nombre = nombre;

@@ -40,10 +40,8 @@ public class HttpConnectValorant {
         }
         finally {
 
-            //1.5 Se desconecta la conexión.
             if( http != null ) http.disconnect();
         }
-        Log.d("C", "Content: "+content);
         return content;
     }
 
@@ -60,7 +58,7 @@ public class HttpConnectValorant {
             http.setDoOutput(true);
 
             PrintWriter writer = new PrintWriter(http.getOutputStream());
-            writer.print(params); //Aquí se le pasaría la variable creada query
+            writer.print(params);
             writer.flush();
             responseCode = http.getResponseCode();
         } catch (Exception e) {

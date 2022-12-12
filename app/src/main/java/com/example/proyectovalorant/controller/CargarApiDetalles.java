@@ -23,6 +23,8 @@ import com.example.proyectovalorant.adapter.RecyclerAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class CargarApiDetalles extends AppCompatActivity {
 
     RecyclerAdapter recAdapter;
@@ -68,53 +70,41 @@ public class CargarApiDetalles extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        //Cargamos las preferencias
         loadPreferences();
-
     }
 
     public void loadPreferences(){
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CargarApiDetalles.this);
         boolean activo = sharedPreferences.getBoolean("tema", false);
-        Log.d("H", "Devuelve: " + activo);
-
         setDayNigth(activo);
-
     }
 
     public void setDayNigth(boolean modo){
-
         if (modo){
-
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
             txtTipo.setTextColor(Color.rgb(255,255,255));
             txtDesc.setTextColor(Color.rgb(255,255,255));
             txtDescTipo.setTextColor(Color.rgb(255,255,255));
             txtTitulo.setTextColor(Color.rgb(255,255,255));
-
         }else{
-
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         }
     }
 
+    //Se encarga de realizar la consulta sobre la base de datos y obtener los datos que deseamos
     private class taskConnections extends AsyncTask<String,Void,String> {
 
         @Override
         protected String doInBackground(String... strings) {
-            Log.d("Hola","Entra doInBack");
             String result = null;
             switch (strings[0]){
                 case "GET":
                     result = HttpConnectValorant.getRequest(strings[1]);
-                    Log.d("R", "Result: " + result + "strings[1]: " + strings[1]);
                     break;
                 case "POST":
                     result = Integer.toString(HttpConnectValorant.postRequest(strings[1],strings[2]));
-                    Log.d("R", "Result: " + result);
                     break;
             }
             return result;
@@ -125,8 +115,9 @@ public class CargarApiDetalles extends AppCompatActivity {
             try {
                 if(s != null){
 
+                    //Cogemos el objeto que ha obtenido
                     JSONObject object = new JSONObject(s);
-                    
+                    //Cogemos el objeto del objeto que tenemos arriba con el Srting data
                     JSONObject objetoData = object.getJSONObject("data");
 
                     String name = "";
@@ -156,7 +147,7 @@ public class CargarApiDetalles extends AppCompatActivity {
 
                         txtTitulo.setText(name);
                         txtDesc.setText(descripcion);
-                        //img.setBackground(contexto.getDrawable(R.drawable.degradado_morado));
+
                         Glide.with(getApplicationContext())
                                 .load(urlImagen)
                                 .placeholder(progressDrawable)
@@ -175,13 +166,18 @@ public class CargarApiDetalles extends AppCompatActivity {
                     recAdapter.notifyDataSetChanged();
 
                 }else{
-                    Toast.makeText(CargarApiDetalles.this, "Problema al cargar los datos", Toast.LENGTH_SHORT).show();
+                    showToast("Problema al implementar los datos", R.style.toastIncorrecto);
                 }
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                showToast("Problema al implementar los datos", R.style.toastIncorrecto);
             }
         }
+    }
+
+    //Metodo que implementa la biblioteca externa styleabletoast para dar formato a los toast
+    public void showToast(String msg, int style){
+        StyleableToast.makeText(this, msg, Toast.LENGTH_LONG, style).show();
     }
 
 

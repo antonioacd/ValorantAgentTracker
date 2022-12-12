@@ -48,10 +48,6 @@
             android:exported="true" />
         <activity
             android:label="Preferencias"
-            android:name=".controller.Preferencias"
-            android:exported="true" />
-        <activity
-            android:label="Preferencias"
             android:name=".controller.SettingActivity"
             android:exported="true" />
 

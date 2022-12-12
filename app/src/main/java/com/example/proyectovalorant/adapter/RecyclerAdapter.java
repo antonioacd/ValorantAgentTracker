@@ -29,6 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public ArrayList<Objeto> listaObjetos;
     private CircularProgressDrawable progressDrawable;
 
+    //Declaramos los listener de nuestro RecyclerAdapter
     View.OnClickListener onClickListener;
     View.OnLongClickListener onLongClickListener;
 
@@ -40,37 +41,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         listaObjetos = new ArrayList<Objeto>();
     }
 
+    //Metodo para borrar un item del recyclerAdapter, borrandolo de la lista
     public void deleteItem(int seleccionado){
-
-        Log.d("H", "delete: " +  listaObjetos.get(2).toString());
-
         listaObjetos.remove(seleccionado);
         this.notifyDataSetChanged();
         
     }
 
+    //Metodo para añadir un Item a la lista y al recyclerAdapter
     public void insertarItem(Objeto o){
-
         listaObjetos.add(o);
         this.notifyDataSetChanged();
-
     }
 
-    public void modItem(String id,String name, String desc){
+    //Metodo para modificar un Item del RecyclerAdapter
+    public void modItem(int seleccionado,String id,String name, String desc){
 
-        for (int i = 0; i < listaObjetos.size(); i++) {
-
-            if (listaObjetos.get(i).getId().equals(id)){
-
-                listaObjetos.get(i).setTitulo(name);
-                listaObjetos.get(i).setDescripcion(desc);
-
-            }
-        }
+        listaObjetos.get(seleccionado).setTitulo(name);
+        listaObjetos.get(seleccionado).setDescripcion(desc);
+        listaObjetos.get(seleccionado).setFotoId(id);
 
         this.notifyDataSetChanged();
     }
 
+    //Creamos la vista de nuestro RecyclerAdapter
     @NonNull
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -78,12 +72,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_objeto,parent, false);
         RecyclerHolder recyclerHolder = new RecyclerHolder(view);
 
+        //asignamos los listener a nuestra vista
         view.setOnClickListener(onClickListener);
         view.setOnLongClickListener(onLongClickListener);
 
         return recyclerHolder;
     }
 
+    //Introducimos los datos en el RecyclerAdapter
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
 
@@ -108,6 +104,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return listaObjetos.size();
     }
 
+    //Asignamos los elementos de nustro recycled holder a variables creadas
     public class RecyclerHolder extends RecyclerView.ViewHolder {
 
         ImageView img;

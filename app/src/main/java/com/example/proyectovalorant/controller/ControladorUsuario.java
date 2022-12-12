@@ -58,17 +58,20 @@ public class ControladorUsuario extends AppCompatActivity {
         lblUsuario = (TextView) findViewById(R.id.lblUsuario);
         lblPass = (TextView) findViewById(R.id.lblPass);
 
+        //Capturamos el intent y cogemos la informacion extra, que sera el usuario
         Intent i = getIntent();
-
         usuario = i.getStringExtra("user");
 
+        //Consultamos los datos de ese usuario a la base de datos
         Usuario u = dba.getDataUser(usuario);
 
+        //Establecemos los datos en nuestros campos del xml
         txtNombre.setText(u.getNombre());
         txtTelefono.setText(u.getTelefono());
         txtUsuario.setText(u.getUsuario());
         txtPass.setText(u.getContraseña());
 
+        //Usamos Glide para añadir la foto
         progressDrawable = new CircularProgressDrawable(this);
         progressDrawable.setStrokeWidth(10f);
         progressDrawable.setStyle(CircularProgressDrawable.LARGE);
@@ -81,6 +84,7 @@ public class ControladorUsuario extends AppCompatActivity {
                 .error(R.mipmap.ic_launcher)
                 .into(imagen);
 
+        //Variable para controlar la visibilidad de la
         oculta = true;
 
         visible.setOnClickListener(new View.OnClickListener() {
@@ -104,14 +108,12 @@ public class ControladorUsuario extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        //Cargamos las preferencias
         loadPreferences();
-
     }
 
 
     public void loadPreferences(){
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ControladorUsuario.this);
         boolean activo = sharedPreferences.getBoolean("tema", false);
         Log.d("H", "Devuelve: " + activo);
@@ -121,21 +123,14 @@ public class ControladorUsuario extends AppCompatActivity {
     }
 
     public void setDayNigth(boolean modo){
-
         if (modo){
-
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
             lblNombre.setTextColor(Color.rgb(255,255,255));
             lblTelefono.setTextColor(Color.rgb(255,255,255));
             lblUsuario.setTextColor(Color.rgb(255,255,255));
             lblPass.setTextColor(Color.rgb(255,255,255));
-
-
         }else{
-
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         }
     }
 
