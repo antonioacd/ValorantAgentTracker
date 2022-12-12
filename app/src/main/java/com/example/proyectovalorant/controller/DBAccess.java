@@ -139,17 +139,12 @@ public class DBAccess extends SQLiteOpenHelper {
 
     }
 
-    //Todo 5. Creamos un método para recuperar datos en la BD.
     public int getUser(String usuario, String contrasenia){
 
         int result = -1;
 
-        //Todo 5.1. Pedimos acceso de lectura de la BD.
         SQLiteDatabase db = this.getReadableDatabase();
 
-        //Todo 5.2. Realizamos la consulta a través del método 'query', cuyo significado de los
-        // todo-> parámetros tenemos en los apuntes. Este método devuelve un cursor que nos
-        // todo-> permite recorrer las tuplas del resultado.
         String[] cols = new String[]{NOMBRE_COLUMN ,TELEFONO_COLUMN ,USUARIO_COLUMN, CONTRASENIA_COLUMN};
 
         //Un cursor es un tipo de dato que se mueve entre los registros devueltos por una consulta de una base de datos.
@@ -157,7 +152,6 @@ public class DBAccess extends SQLiteOpenHelper {
 
         if(c.moveToFirst()) {
 
-            //Todo 5.4. Cogemos el valor referente a la posicion de la columna
             String contraseniaCogida = c.getString(3);
 
             Log("Nombre: " + c.getString(0) +
@@ -175,12 +169,10 @@ public class DBAccess extends SQLiteOpenHelper {
 
         }
 
-        //Todo 5.5. Cerramos el cursor
         if(c != null) {
             c.close();
         }
 
-        //Todo 5.6. Cerramos la base de datos.
         db.close();
 
         return result;
@@ -188,7 +180,6 @@ public class DBAccess extends SQLiteOpenHelper {
 
     }
 
-    //Todo 6. Ejemplo de acceso a base de datos con argumentos
     public ArrayList<String> getAllUsers(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> listaUsuarios = new ArrayList<>();
@@ -201,15 +192,13 @@ public class DBAccess extends SQLiteOpenHelper {
         //Un cursor es un tipo de dato que se mueve entre los registros devueltos por una consulta de una base de datos.
         Cursor c = db.query(DB_TABLE_NAME,cols,null,null,null,null,null);
 
-        //Todo 6.1. Movemos el iterador al primer elemento (si existe devuelve true sino false)
         if(c.moveToFirst()){
 
             do{
-                //Todo 6.2. Cogemos el valor referente a la posicion de la columna
                 String user = c.getString(2);
 
                 listaUsuarios.add(user);
-            }while(c.moveToNext()); //Todo 6.3. Mientras exista siguientes registros el cursor va iterando sobre ellos
+            }while(c.moveToNext());
         }
 
         return listaUsuarios;
@@ -217,9 +206,6 @@ public class DBAccess extends SQLiteOpenHelper {
 
     public void Log(String msg){
         Log.d("DB", msg);
-    }
-    public void Toast(String msg){
-        Toast.makeText(null, msg, Toast.LENGTH_SHORT).show();
     }
 
 

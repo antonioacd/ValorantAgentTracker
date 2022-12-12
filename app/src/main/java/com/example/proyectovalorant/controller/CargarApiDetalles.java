@@ -1,11 +1,9 @@
-package com.example.proyectovalorant.activities;
+package com.example.proyectovalorant.controller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,15 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.example.proyectovalorant.R;
 import com.example.proyectovalorant.adapter.RecyclerAdapter;
-import com.example.proyectovalorant.controller.HttpConnectValorant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,10 +57,48 @@ public class CargarApiDetalles extends AppCompatActivity {
 
         id = i.getStringExtra("id");
 
-        contexto = this;
+        //contexto = this;
 
         new CargarApiDetalles.taskConnections().execute("GET", "/agents/" + id);
 
+        loadPreferences();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadPreferences();
+
+    }
+
+    public void loadPreferences(){
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CargarApiDetalles.this);
+        boolean activo = sharedPreferences.getBoolean("tema", false);
+        Log.d("H", "Devuelve: " + activo);
+
+        setDayNigth(activo);
+
+    }
+
+    public void setDayNigth(boolean modo){
+
+        if (modo){
+
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+            txtTipo.setTextColor(Color.rgb(255,255,255));
+            txtDesc.setTextColor(Color.rgb(255,255,255));
+            txtDescTipo.setTextColor(Color.rgb(255,255,255));
+            txtTitulo.setTextColor(Color.rgb(255,255,255));
+
+        }else{
+
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
     private class taskConnections extends AsyncTask<String,Void,String> {
@@ -113,8 +148,7 @@ public class CargarApiDetalles extends AppCompatActivity {
 
                         descTipo =objetoData.getJSONObject("role").getString("description");
 
-                        //Todo 2.1 Configuración del CircularProgressDrawable
-                        progressDrawable = new CircularProgressDrawable(contexto);
+                        progressDrawable = new CircularProgressDrawable(getApplicationContext());
                         progressDrawable.setStrokeWidth(10f);
                         progressDrawable.setStyle(CircularProgressDrawable.LARGE);
                         progressDrawable.setCenterRadius(30f);
@@ -122,17 +156,14 @@ public class CargarApiDetalles extends AppCompatActivity {
 
                         txtTitulo.setText(name);
                         txtDesc.setText(descripcion);
-                        img.setBackground(contexto.getDrawable(R.drawable.degradado_morado));
-                        Glide.with(contexto)
+                        //img.setBackground(contexto.getDrawable(R.drawable.degradado_morado));
+                        Glide.with(getApplicationContext())
                                 .load(urlImagen)
                                 .placeholder(progressDrawable)
                                 .error(R.mipmap.ic_launcher)
                                 .into(img);
 
-                        //img2.setBackground(contexto.getDrawable(R.drawable.degradado_morado));
-
-                        //img2.set
-                        Glide.with(contexto)
+                        Glide.with(getApplicationContext())
                                 .load(urlImagen2)
                                 .placeholder(progressDrawable)
                                 .error(R.mipmap.ic_launcher)

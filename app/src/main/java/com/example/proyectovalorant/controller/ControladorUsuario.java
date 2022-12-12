@@ -1,21 +1,23 @@
-package com.example.proyectovalorant.activities;
+package com.example.proyectovalorant.controller;
 
 import android.content.Intent;
-import android.media.Image;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.example.proyectovalorant.R;
-import com.example.proyectovalorant.adapter.RecyclerAdapter;
-import com.example.proyectovalorant.controller.DBAccess;
 import com.example.proyectovalorant.model.Usuario;
 
 public class ControladorUsuario extends AppCompatActivity {
@@ -24,6 +26,11 @@ public class ControladorUsuario extends AppCompatActivity {
     TextView txtTelefono;
     TextView txtUsuario;
     TextView txtPass;
+
+    TextView lblNombre;
+    TextView lblTelefono;
+    TextView lblUsuario;
+    TextView lblPass;
     Button visible;
     ImageView imagen;
 
@@ -45,6 +52,11 @@ public class ControladorUsuario extends AppCompatActivity {
         txtPass = (TextView) findViewById(R.id.txtPassUser);
         visible = (Button) findViewById(R.id.btnVerPassword);
         imagen = (ImageView) findViewById(R.id.imagenDatos);
+
+        lblNombre = (TextView) findViewById(R.id.lblNombre);
+        lblTelefono = (TextView) findViewById(R.id.lblTelefono);
+        lblUsuario = (TextView) findViewById(R.id.lblUsuario);
+        lblPass = (TextView) findViewById(R.id.lblPass);
 
         Intent i = getIntent();
 
@@ -87,6 +99,44 @@ public class ControladorUsuario extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadPreferences();
+
+    }
+
+
+    public void loadPreferences(){
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ControladorUsuario.this);
+        boolean activo = sharedPreferences.getBoolean("tema", false);
+        Log.d("H", "Devuelve: " + activo);
+
+        setDayNigth(activo);
+
+    }
+
+    public void setDayNigth(boolean modo){
+
+        if (modo){
+
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+            lblNombre.setTextColor(Color.rgb(255,255,255));
+            lblTelefono.setTextColor(Color.rgb(255,255,255));
+            lblUsuario.setTextColor(Color.rgb(255,255,255));
+            lblPass.setTextColor(Color.rgb(255,255,255));
+
+
+        }else{
+
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
 }

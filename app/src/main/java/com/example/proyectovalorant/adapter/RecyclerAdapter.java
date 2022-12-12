@@ -87,7 +87,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
 
-        //Todo 2.1 Configuración del CircularProgressDrawable
         progressDrawable = new CircularProgressDrawable(contexto);
         progressDrawable.setStrokeWidth(10f);
         progressDrawable.setStyle(CircularProgressDrawable.LARGE);

@@ -1,4 +1,4 @@
-package com.example.proyectovalorant.activities;
+package com.example.proyectovalorant.controller;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -34,30 +34,21 @@ import org.json.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.proyectovalorant.R;
 import com.example.proyectovalorant.adapter.RecyclerAdapter;
-import com.example.proyectovalorant.controller.HttpConnectValorant;
 import com.example.proyectovalorant.model.Objeto;
 
-/**
- * Actividad peticiones REST: En esta actividad se verán las bases de las peticiones REST a través
- * de las aplicaciones Android
- * @author José Carlos Alfaro
- * @version 0.1
- *
- * CONSIDERACIONES PREVIAS:
- *  1. En este ejemplo se usa la vista ListView para simplificar el ejemplo. Se recomienda el uso
- *  de RecyclerView
- *
- *  2. Hay que tener en cuenta los permisos en Android Manifest, en este ejemplo es necesario
- *  el uso de internet.
- *
- *
- */
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class CargarApiActivity extends AppCompatActivity {
 
+    //Variable user, en la cual almacenaremos la info extra recogida de la actividad anterior
     String user;
-    private ConstraintLayout constraintLayout;
-    public RecyclerView rV;
+
+    //Creamos las variables necesarias para implementar el recyclerView
+    ConstraintLayout constraintLayout;
+    RecyclerView rV;
     RecyclerAdapter recAdapter;
+
+
     private androidx.appcompat.view.ActionMode mActionMode;
     int seleccionado;
     AlertDialog dialog;
@@ -73,13 +64,15 @@ public class CargarApiActivity extends AppCompatActivity {
 
         //Cogemos el intent
         Intent i = getIntent();
-        //Cogemos la infomacion extra
+        //Cogemos la infomacion extra, que sera el usuario que ha sido registrado
         user = i.getStringExtra("user");
         //Creamos un objeto del recicler adapter
         recAdapter = new RecyclerAdapter(this);
 
+        //LLamamos el metodo taskConecctions para realizar una consulta a la api
         new CargarApiActivity.taskConnections().execute("GET", "/agents?isPlayableCharacter=true");
 
+        //Asignamos a la variable rV el recyclerView
         rV = (RecyclerView) findViewById(R.id.recView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(CargarApiActivity.this);
@@ -89,8 +82,6 @@ public class CargarApiActivity extends AppCompatActivity {
         recAdapter.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-
-                Toast.makeText(CargarApiActivity.this,"Long", Toast.LENGTH_LONG);
 
                 seleccionado = rV.getChildAdapterPosition(view);
 
@@ -130,16 +121,7 @@ public class CargarApiActivity extends AppCompatActivity {
 
     public void loadPreferences(){
 
-        //Todo 4. Una vez creado todo, solo debemos de preocuparnos de acceder a la información,
-        // ya  que Android se encarga del almacenamiento de los datos que introduce el usuario en
-        // la ventana de preferencias.
-
-        //Todo 4.1 Utilizamos PreferenceManager para obtener las preferencias compartidas de nuestra
-        // aplicación. TENEIS QUE TENER EN CUENTA QUE ESTE ES EL MISMO PARA TODA LA APP (PATRÓN SINGLETON)
-
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CargarApiActivity.this);
-        // Todo 4.2 Una vez tenemos acceso a las preferencias compartidas, solo debemos acceder mediante la clave para obtener su valor
         boolean activo = sharedPreferences.getBoolean("tema", false);
         Log.d("H", "Devuelve: " + activo);
 
@@ -160,19 +142,14 @@ public class CargarApiActivity extends AppCompatActivity {
         }
     }
 
-    //Todo 1. Se sobreescribe el metodo onCreateOptionsMenu para indicar que nuestra app tendra
-    // un menu personalizado.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Todo 1.1 Se usa un inflater para construir la vista y se pasa el menu por defecto para
-        // que Android se encargue de colocarlo en la vista
+
         getMenuInflater().inflate(R.menu.menu_simple,menu);
 
         return true;
     }
 
-    //Todo 2. Se sobreescribe el metodo onOptionsItemSelected para manejar las selecciones a través
-    // de los diferentes item del menu.
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //int itemId = item.getItemId();
@@ -262,6 +239,7 @@ public class CargarApiActivity extends AppCompatActivity {
                 recAdapter.listaObjetos.get(seleccionado).setDescripcion(eDesc.getText().toString());
                 recAdapter.listaObjetos.get(seleccionado).setFotoId(imagen);
                 recAdapter.notifyDataSetChanged();
+                showToast("Agente modificado", R.style.toastModificar);
                 dialog.dismiss();
             }
         });
@@ -354,6 +332,9 @@ public class CargarApiActivity extends AppCompatActivity {
                 recAdapter.listaObjetos.add(o);
 
                 recAdapter.notifyDataSetChanged();
+
+                showToast("Agente añadido al final de la lista", R.style.toastCorrecto);
+
                 dialog.dismiss();
             }
         });
@@ -390,11 +371,6 @@ public class CargarApiActivity extends AppCompatActivity {
                 Log.d("D", "La s es: " + s);
                 if(s != null){
                     Log.d("D","DATOS: "+s);
-
-                    //Todo 3. La respuesta que nos devuelve es un texto en formato JSON. Para ello,
-                    // en este caso, haremos uso de las clases que nos proporciona Android. Antes
-                    // que nada, se deberá consultar la documentación para conocer el formato de
-                    // la respuesta del servidor, y así saber cómo deserializar el mensaje.
 
                     JSONObject jsonObject = new JSONObject(s);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -450,17 +426,15 @@ public class CargarApiActivity extends AppCompatActivity {
             switch(itemId){
                 case R.id.itemAnadir:
                     alertAdd();
-                    myToast("Agente añadido al final de la lista");
                     mode.finish();
                     break;
                 case R.id.itemBorrar:
                     recAdapter.deleteItem(seleccionado);
-                    myToast("Agente borrado");
+                    showToast("Agente borrado", R.style.toastModificar);
                     mode.finish();
                     break;
                 case R.id.itemModificar:
                     alertMod(seleccionado);
-                    myToast("Agente modificado");
                     mode.finish();
                     break;
             }
@@ -473,9 +447,9 @@ public class CargarApiActivity extends AppCompatActivity {
         }
     };
 
-    public void myToast(String msg){
+    public void showToast(String msg, int style){
 
-        Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        StyleableToast.makeText(this, msg, Toast.LENGTH_LONG, style).show();
 
     }
 

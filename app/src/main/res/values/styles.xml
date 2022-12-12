@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="mytoast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#fff</item>
+    </style>
+
+    <style name="toastCorrecto">
+        <item name="stColorBackground">#00FF03</item>
+        <item name="stTextColor">#000</item>
+        <item name="stIconStart">@drawable/aceptar</item>
+        <item name="stStrokeColor">#000</item>
+        <item name="stStrokeWidth">1dp</item>
+    </style>
+
+    <style name="toastIncorrecto">
+        <item name="stColorBackground">#FF0000</item>
+        <item name="stTextColor">#000</item>
+        <item name="stIconStart">@drawable/cancelar</item>
+        <item name="stStrokeColor">#000</item>
+        <item name="stStrokeWidth">1dp</item>
+    </style>
+
+    <style name="toastModificar">
+        <item name="stColorBackground">#FF9900</item>
+        <item name="stTextColor">#000</item>
+        <item name="stIconStart">@drawable/lapiz</item>
+        <item name="stStrokeColor">#000</item>
+        <item name="stStrokeWidth">1dp</item>
+    </style>
+
+</resources>

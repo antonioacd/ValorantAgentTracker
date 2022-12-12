@@ -28,7 +28,7 @@
         </activity>
         <activity
             android:label="Agentes"
-            android:name=".activities.CargarApiActivity"
+            android:name=".controller.CargarApiActivity"
             android:exported="true" />
         <activity
             android:label="Registro"
@@ -36,23 +36,23 @@
             android:exported="true" />
         <activity
             android:label="Agente Detallado"
-            android:name=".activities.CargarApiDetalles"
+            android:name=".controller.CargarApiDetalles"
             android:exported="true" />
         <activity
             android:label="Mis datos"
-            android:name=".activities.ControladorUsuario"
+            android:name=".controller.ControladorUsuario"
             android:exported="true" />
         <activity
             android:label="Mis datos"
-            android:name=".activities.Ajustes"
+            android:name=".controller.Ajustes"
             android:exported="true" />
         <activity
             android:label="Preferencias"
-            android:name=".activities.Preferencias"
+            android:name=".controller.Preferencias"
             android:exported="true" />
         <activity
             android:label="Preferencias"
-            android:name=".activities.SettingActivity"
+            android:name=".controller.SettingActivity"
             android:exported="true" />
 
     </application>

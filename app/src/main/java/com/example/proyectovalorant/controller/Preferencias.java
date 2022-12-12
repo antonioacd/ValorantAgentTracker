@@ -1,4 +1,4 @@
-package com.example.proyectovalorant.activities;
+package com.example.proyectovalorant.controller;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
