@@ -111,7 +111,7 @@ public class CargarApiActivity extends AppCompatActivity {
                 seleccionado = rV.getChildAdapterPosition(view);
 
                 //Iniciamos la nueva actividad, que seria la vista maestra del elemento
-                Intent i = new Intent(CargarApiActivity.this, CargarApiDetalles.class);
+                Intent i = new Intent(CargarApiActivity.this, CargarApiDetallesActivity.class);
                 //Introducimos comoo srting extra el id de elemento seleccionado, para mas tarde
                 //en esta clase de vista maestra poder realizar una consulta a la appi sobre
                 //este mismo elemento y no tener que cargar todos de nuevo
@@ -165,7 +165,7 @@ public class CargarApiActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         //Abrimos la Actividad Ajustes
-        Intent i = new Intent(CargarApiActivity.this, Ajustes.class);
+        Intent i = new Intent(CargarApiActivity.this, AjustesActivity.class);
 
         //Le pasamos el usuario que anteriormente habiamos recibido para que pueda consultarlo
         //y asi mostrarlo

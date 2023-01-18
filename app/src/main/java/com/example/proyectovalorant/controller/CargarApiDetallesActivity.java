@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,7 @@ import org.json.JSONObject;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
-public class CargarApiDetalles extends AppCompatActivity {
+public class CargarApiDetallesActivity extends AppCompatActivity {
 
     RecyclerAdapter recAdapter;
 
@@ -61,7 +60,7 @@ public class CargarApiDetalles extends AppCompatActivity {
 
         //contexto = this;
 
-        new CargarApiDetalles.taskConnections().execute("GET", "/agents/" + id);
+        new CargarApiDetallesActivity.taskConnections().execute("GET", "/agents/" + id);
 
         loadPreferences();
 
@@ -76,7 +75,7 @@ public class CargarApiDetalles extends AppCompatActivity {
 
     public void loadPreferences(){
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CargarApiDetalles.this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CargarApiDetallesActivity.this);
         boolean activo = sharedPreferences.getBoolean("tema", false);
         setDayNigth(activo);
     }

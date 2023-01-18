@@ -13,7 +13,7 @@ import androidx.preference.PreferenceManager;
 
 import com.example.proyectovalorant.R;
 
-public class Ajustes extends AppCompatActivity implements View.OnClickListener{
+public class AjustesActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnCuenta;
     Button btnPreferences;
@@ -41,7 +41,7 @@ public class Ajustes extends AppCompatActivity implements View.OnClickListener{
         switch(view.getId()){
             case R.id.btnCuenta:
 
-                Intent i = new Intent(Ajustes.this, ControladorUsuario.class);
+                Intent i = new Intent(AjustesActivity.this, ControladorUsuario.class);
 
                 i.putExtra("user", user);
 
@@ -50,7 +50,7 @@ public class Ajustes extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.btnPreferencias:
 
-                Intent e = new Intent(Ajustes.this, SettingActivity.class);
+                Intent e = new Intent(AjustesActivity.this, SettingActivity.class);
                 startActivity(e);
 
                 break;
@@ -75,7 +75,7 @@ public class Ajustes extends AppCompatActivity implements View.OnClickListener{
         // aplicación. TENEIS QUE TENER EN CUENTA QUE ESTE ES EL MISMO PARA TODA LA APP (PATRÓN SINGLETON)
 
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Ajustes.this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AjustesActivity.this);
         // Todo 4.2 Una vez tenemos acceso a las preferencias compartidas, solo debemos acceder mediante la clave para obtener su valor
         boolean activo = sharedPreferences.getBoolean("tema", false);
         Log.d("H", "Devuelve: " + activo);
