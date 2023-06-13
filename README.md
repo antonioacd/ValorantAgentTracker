@@ -1,5 +1,5 @@
-# ApiRestValorant
-El proyecto ApiRestValorant es una aplicación que se conecta a la API de Valorant para proporcionar información detallada sobre los diferentes personajes del juego. Con esta aplicación, puedes explorar y conocer a fondo cada uno de los personajes, incluyendo sus habilidades.
+# ValorantAgentTracker
+El proyecto ValorantAgentTracker es una aplicación que se conecta a la API de Valorant para proporcionar información detallada sobre los diferentes personajes del juego. Con esta aplicación, puedes explorar y conocer a fondo cada uno de los personajes, incluyendo sus habilidades.
 
 Características clave del Valorant Character Viewer:
 
@@ -15,4 +15,4 @@ Características clave del Valorant Character Viewer:
 
 - Actualizaciones regulares: A medida que la API de Valorant se actualiza con nuevos personajes o cambios en los existentes, la aplicación se adapta para reflejar estos cambios y asegurarse de que siempre estés obteniendo información precisa.
 
-Explora el mundo de Valorant y mejora tu conocimiento sobre los personajes y sus habilidades con ApiRestValorant. Obtén una vista general rápida o profundiza en los detalles para dominar cada aspecto del juego.
+Explora el mundo de Valorant y mejora tu conocimiento sobre los personajes y sus habilidades con ValorantAgentTracker. Obtén una vista general rápida o profundiza en los detalles para dominar cada aspecto del juego.
